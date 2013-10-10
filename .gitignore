@@ -37,3 +37,6 @@ nosetests.xml
 
 # sqlite3 database
 *.db
+
+# pid file for fastcgi service
+*.pid
