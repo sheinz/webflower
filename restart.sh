@@ -1,8 +1,19 @@
 #!/bin/bash
 
-if [ -x flowersite.pid ];
-then
-    kill `cat flowersite.pid`
+# Replace these three settings.
+PROJDIR="/home/ubuntu/virt/django/flowersite"
+PIDFILE="$PROJDIR/flowersite.pid"
+SOCKET="$PROJDIR/flowersite.sock"
+
+pushd $PROJDIR
+
+if [ -f $PIDFILE ]; then
+    echo "Stopping fastcgi server..."
+    kill `cat -- $PIDFILE`
+    rm -f -- $PIDFILE
 fi
 
-python ./manage.py runfcgi demonize=false socket=/home/ubuntu/virt/django/flowersite/flowersite.sock pidfile=/home/ubuntu/virt/django/flowersite/flowersite.pid umask=000
+echo "Starting fastcgi server..."
+python ./manage.py runfcgi daemonize=true socket=$SOCKET pidfile=$PIDFILE umask=000
+
+popd
