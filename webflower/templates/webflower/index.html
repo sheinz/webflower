@@ -1,0 +1,10 @@
+{% if ip_address_list %}
+    <ul>
+        {% for ip_address in ip_address_list %}
+            <li>{{ ip_address }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No ip addresses</p>
+{% endif %}
+
