@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+#
+# Just an example how to update an ip address
+#
 import httplib
 import urllib
 import sys
