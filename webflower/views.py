@@ -21,6 +21,7 @@ def ip_address(request):
 def send_ip_address(request):
     return render(request, 'webflower/send_ip_address.html', {})
 
+
 @csrf_exempt
 def update_ip(request):
     try:
@@ -31,3 +32,16 @@ def update_ip(request):
         ip = FlowerPiAddress(ip_address=_ip_address, date=timezone.now())
         ip.save()
         return HttpResponseRedirect(reverse('webflower:index'))
+
+
+def light(request):
+    return render(request, 'webflower/light.html', {})
+
+
+def set_light(request):
+    try:
+        light = request.POST['light']
+    except KeyError:
+        return HttpResponse("Wrong request")
+    else:
+        return HttpResponse("Turning light {}".format(light))

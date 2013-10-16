@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <form action="{% url 'webflower:set_light' %}" method="post">
+            {% csrf_token %}
+            <div id="buttons">
+                <input type="submit" name="light" value="on" style="height:50px; width:60px"/>
+                <input type="submit" name="light" value="off" style="height:50px; width:60px"/>
+            </div>
+    </body>
+</html>
