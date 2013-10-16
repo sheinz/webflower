@@ -6,6 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from webflower.models import FlowerPiAddress
 
+import pyjsonrpc
+from urllib2 import URLError
+
 
 def index(request):
     ip_address_list = FlowerPiAddress.objects.all().order_by('-date')
@@ -44,4 +47,11 @@ def set_light(request):
     except KeyError:
         return HttpResponse("Wrong request")
     else:
-        return HttpResponse("Turning light {}".format(light))
+        ip = FlowerPiAddress.objects.all().order_by('-date')[0]
+        json_server = "http://{}:8000".format(ip)
+        try:
+            http_client = pyjsonrpc.HttpClient(url=json_server)
+            result = http_client.call("light", light)
+        except URLError:
+            result = "Server \"{}\" is not responding".format(ip)
+        return HttpResponse("Turning light. {}".format(result))
